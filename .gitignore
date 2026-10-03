@@ -28,3 +28,26 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### Maven ###
+target/
+
+### Java ###
+*.class
+
+### Node / Next.js ###
+node_modules/
+.next/
+*.tsbuildinfo
+
+### Ambiente ###
+.env
+.env.local
+.env*.local
+
+### Logs ###
+*.log
+npm-debug.log*
+
+### Artefatos de execução da CLI ###
+/23565-100.json
