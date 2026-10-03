@@ -1,0 +1,10 @@
+server:
+  port: 8080
+
+app:
+  viacep:
+    base-url: https://viacep.com.br
+
+logging:
+  level:
+    root: INFO
