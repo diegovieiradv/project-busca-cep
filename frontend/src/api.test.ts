@@ -1,3 +1,7 @@
+// Base do backend usada pelo cliente API. Definida antes dos imports para que
+// `fetchCep` a utilize (a leitura é feita por chamada, veja `resolveApiBaseUrl`).
+process.env.NEXT_PUBLIC_API_BASE_URL = "http://localhost:8080";
+
 import { fetchCep } from "./api";
 import { ApiError } from "./types";
 import type { EnderecoResponse, ErrorResponse } from "./types";
@@ -47,7 +51,7 @@ describe("fetchCep", () => {
     await expect(fetchCep("23565-100")).resolves.toEqual(endereco);
 
     expect(fetchMock).toHaveBeenCalledTimes(1);
-    expect(fetchMock).toHaveBeenCalledWith("/api/cep/23565-100");
+    expect(fetchMock).toHaveBeenCalledWith("http://localhost:8080/api/cep/23565-100");
   });
 
   it("lança ApiError com status e detalhes quando a API responde erro HTTP", async () => {

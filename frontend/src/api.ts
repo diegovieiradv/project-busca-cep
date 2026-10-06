@@ -1,8 +1,31 @@
 import { ApiError } from "./types";
 import type { EnderecoResponse, ErrorResponse } from "./types";
 
-/** Caminho relativo ao origin do backend (mesmo host). */
+/** Caminho da API de CEP, relativo à base do backend. */
 const API_BASE_PATH = "/api/cep";
+
+/** Base usada quando `NEXT_PUBLIC_API_BASE_URL` não está definida. */
+const DEFAULT_API_BASE_URL = "http://localhost:8080";
+
+/**
+ * Resolve a URL base do backend a partir de `NEXT_PUBLIC_API_BASE_URL`.
+ *
+ * Em produção (Vercel) a variável aponta para o backend publicado; em
+ * desenvolvimento o `.env.local` a define como `http://localhost:8080`, e o
+ * fallback cobre o caso de ela não ser carregada. Barras finais são removidas
+ * para evitar URLs com `//`.
+ *
+ * A leitura acontece por chamada (e não no topo do módulo) para que os testes
+ * possam definir a variável antes de invocar `fetchCep`; no bundle do Next a
+ * expressão `process.env.NEXT_PUBLIC_*` é substituída em tempo de build.
+ */
+function resolveApiBaseUrl(): string {
+  const configured = process.env.NEXT_PUBLIC_API_BASE_URL;
+  if (!configured) {
+    return DEFAULT_API_BASE_URL;
+  }
+  return configured.replace(/\/+$/, "");
+}
 
 /**
  * Consulta o endereço correspondente a um CEP.
@@ -17,7 +40,7 @@ const API_BASE_PATH = "/api/cep";
  * `details` quando o backend os enviar.
  */
 export async function fetchCep(cep: string): Promise<EnderecoResponse> {
-  const url = `${API_BASE_PATH}/${encodeURIComponent(cep.trim())}`;
+  const url = `${resolveApiBaseUrl()}${API_BASE_PATH}/${encodeURIComponent(cep.trim())}`;
 
   let response: Response;
   try {
