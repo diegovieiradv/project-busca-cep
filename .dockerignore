@@ -1,0 +1,33 @@
+# Build
+target/
+
+# Controle de versão
+.git/
+.gitignore
+
+# IDE / editores
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+out/
+bin/
+
+# Node / Next.js (front no mesmo repositório)
+node_modules/
+.next/
+*.tsbuildinfo
+
+# Artefatos e docs locais (não entram na imagem nem invalidam o cache)
+README.md
+*.class
+*.log
+.env
+.env*
+23565-100.json
+
+# Próprios arquivos de build não precisam estar no contexto
+Dockerfile
+.dockerignore

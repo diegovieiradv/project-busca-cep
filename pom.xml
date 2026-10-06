@@ -47,6 +47,13 @@
                     <parameters>true</parameters>
                 </configuration>
             </plugin>
+            <!-- Declarado aqui (sem version, herda do pluginManagement do parent) para
+                 que `mvn package` faça o repackage e gere o jar executável
+                 (BOOT-INF + Main-Class/Start-Class) usado em produção/Docker. -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
 </project>

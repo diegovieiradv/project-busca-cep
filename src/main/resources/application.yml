@@ -1,9 +1,17 @@
+# O Render define a env var PORT; o default 8080 mantém o uso local.
 server:
-  port: 8080
+  port: ${PORT:8080}
 
 app:
   viacep:
     base-url: https://viacep.com.br
+  # Origens autorizadas em CORS para /api/** (separadas por vírgula).
+  # Dev local: o front Next.js em http://localhost:3000.
+  # Produção (Render): injete a URL da Vercel na env var
+  # APP_CORS_ALLOWED_ORIGINS — o Spring converte automaticamente
+  # APP_CORS_ALLOWED_ORIGINS em app.cors.allowed-origins (relaxed binding).
+  cors:
+    allowed-origins: http://localhost:3000
 
 logging:
   level:

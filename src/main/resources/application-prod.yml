@@ -1,0 +1,11 @@
+# Perfil de produção.
+#
+# Ativação (Render): defina a variável de ambiente SPRING_PROFILES_ACTIVE=prod.
+#
+# Só sobrescreve o logging: as demais propriedades (server.port, CORS, base-url
+# do ViaCEP) continuam vindo do application.yml, que é sempre carregado.
+
+logging:
+  level:
+    root: WARN
+    com.diegovieira.buscacep: INFO
