@@ -1,53 +1,67 @@
-# Projeto Busca CEP
+# Busca CEP
 
-Aplicacao Java para consulta de enderecos via CEP usando a API ViaCEP.
+Aplicacao full-stack para consulta de enderecos via CEP, com backend Spring Boot e frontend Next.js.
 
 ## Descricao
 
-Aplicacao console que busca endereco por CEP na API ViaCEP, exibe no terminal e salva como arquivo JSON.
+O Busca CEP permite consultar enderecos completos a partir de um CEP brasileiro, integrando-se a API ViaCEP. A aplicacao possui interface web responsiva com identidade visual profissional.
+
+## Arquitetura
+
+- **Backend:** Java 21 + Spring Boot 3.5 + Maven Wrapper (Spring Web, CORS, Docker)
+- **Frontend:** Next.js 16 (TypeScript) + Tailwind CSS + Jest
+- **Integracao:** API REST (`/api/cep/{cep}`) consumida pelo frontend via cliente API configurado com `NEXT_PUBLIC_API_BASE_URL`
+- **Deploy:** Backend em container (Render) / Frontend (Vercel)
 
 ## Funcionalidades
 
 - Consulta de CEP via API ViaCEP
-- Exibicao do endereco completo
-- Salvamento em arquivo JSON (formato pretty-print)
+- Interface responsiva (desktop / mobile)
+- Identidade visual com paleta profissional (`#0f3d7a`, `#c5a065`)
+- Favicon SVG personalizado
+- Estados visuais: carregamento, erro e resultado
+- Acessibilidade basica (labels, roles, aria-label)
 
 ## Tecnologias
 
-- **Linguagem:** Java 16+ (records)
-- **HTTP Client:** `java.net.http.HttpClient` (Java 11+)
-- **JSON:** Google Gson 2.13.2
-- **API:** ViaCEP (viacep.com.br)
+- Java 21 / Spring Boot 3.5 / Maven
+- Next.js 16 / TypeScript / Tailwind CSS
+- Jest (testes frontend)
+- Docker (backend)
 
-## Como Rodar
+## Instalacao e Execucao
 
+### Backend
 ```bash
-# Compile
-javac -cp gson-2.13.2.jar -d out/production src/*.java
+cd .
+./mvnw spring-boot:run
+```
+Ou: `mvn clean compile spring-boot:run`
 
-# Execute
-java -cp "out/production:$HOME/Downloads/gson-2.13.2.jar" Principal
+### Frontend
+```bash
+cd frontend
+npm install
+npm run dev
 ```
 
-Ou abra no IntelliJ IDEA e execute `Principal.java`.
-
-## Exemplo de Uso
-
+### Variaveis de Ambiente (`frontend/.env.local`)
 ```
-Digite um cep: 23565-100
+NEXT_PUBLIC_API_BASE_URL=http://localhost:8080
 ```
 
-Saida:
-```json
-{
-  "cep": "23565-100",
-  "logradouro": "Estrada Jose Cid Fernandes",
-  "bairro": "Santa Cruz",
-  "uf": "RJ",
-  "localidade": "Rio de Janeiro"
-}
-```
+## Testes
+
+- Backend: `mvn test` (58 testes)
+- Frontend: `npm test` (9 testes)
+- E2E: validar build (`npm run build`) + smoke test no deploy
+
+## Deploy
+
+- Backend: Render (container via Dockerfile)
+- Frontend: Vercel
+- Variaveis de ambiente configuradas nas plataformas (sem credenciais expostas)
 
 ## Licenca
-
 MIT License - Diego Vieira
+
